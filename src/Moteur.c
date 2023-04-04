@@ -1,3 +1,13 @@
+/**
+ * @file Moteur.c
+ * Fichier contenant le
+ * moteur du jeu des huit
+ * dames
+ * @author Claire SALLE
+ * @author Rayane NASSIB
+ * @date 05-04-2023
+ */
+
 #include "../include/Moteur.h"
 #include <stdio.h>
 

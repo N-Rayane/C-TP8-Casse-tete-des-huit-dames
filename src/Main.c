@@ -15,7 +15,9 @@ int main() {
 
     printf("\n%d\n", est_sans_attaque_mutuelle(test));
 
-    afficher_position(test);
+    initialiser_ncurses();
+    affiche_pos(test);
+    sortir();
 
     return 0;
 }

@@ -1,3 +1,14 @@
+/**
+ * @file Moteur.h
+ * Fichier d'en-tête de Moteur.c
+ * présentant la définition de
+ * ses fonctions et structures,
+ * ainsi que leur documentation
+ * @author Claire SALLE
+ * @author Rayane NASSIB
+ * @date 05-04-2023
+ */
+
 #ifndef __MOTEUR__
 #define __MOTEUR__ 
 
