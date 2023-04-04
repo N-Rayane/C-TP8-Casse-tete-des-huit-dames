@@ -14,6 +14,7 @@
 
 #include "Moteur.h"
 #include <ncurses.h>
+#include <string.h>
 
 #define NB_COLONNES 8
 #define NB_LIGNES 8
@@ -30,12 +31,7 @@ enum couleurs {
     DAME_NOIRE,
     DAME_BLANCHE,
     VIOLET,
-    LETTRE_VIOLET,
-    CYAN_LETTRE_ROUGE,
-    VIOLET_LETTRE_ROUGE,
-    CYAN_LETTRE_VIOLET,
-    CYAN,
-    TEXTE_FIN
+    DAME_VIOLET,
 };
 
 /**
@@ -57,6 +53,8 @@ int recuperer_touche(int touche);
  */
 void afficher_carre(char lettre, int x, int y, int couleur_fond,
                     int couleur_texte);
+
+void afficher_texte(const char* texte);
 
 /**
  * @brief affiche l'échéquier

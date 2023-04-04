@@ -1,31 +1,27 @@
 #include "../include/Graphique.h"
 #include "../include/Moteur.h"
-#include <curses.h>
 
 int main() {
-    Position test = 0;
+    Position pos = 0;
     Case actu = A1;
     int touche;
+
     initialiser_ncurses();
     remplir_tab_cases_attaquees();
+    affiche_pos(pos, actu);
     while ((touche = getch()) != 'q') {
-        gerer_controles(recuperer_touche(touche), test, &actu);
-        affiche_pos(test, actu);
+        if (gerer_controles(recuperer_touche(touche), pos, &actu) == 1) {
+            placer_dame_position(&pos, actu);
+        }
+        affiche_pos(pos, actu);
+        if (!est_sans_attaque_mutuelle(pos)) {
+            afficher_texte("Deux dames se mangent.");
+        } else if (nombre_dames(pos) == 8) {
+            afficher_texte("Bravo ! Vous avez réussi !!");
+        } else {
+            afficher_texte("                           ");
+        }
     }
-
-    placer_dame_position(&test, C1);
-    placer_dame_position(&test, F2);
-    placer_dame_position(&test, B3);
-    placer_dame_position(&test, E4);
-    placer_dame_position(&test, H5);
-    placer_dame_position(&test, A6);
-    placer_dame_position(&test, D8);
-
-    
-
-    printf("\n%d\n", est_sans_attaque_mutuelle(test));
-    getch();
-    
     
     sortir();
 

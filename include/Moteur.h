@@ -87,7 +87,9 @@ int est_case_occupee(Position pos, Case c);
 
 int placer_dame_position(Position *pos, Case c);
 
-void gerer_controles(int touche, Position pos, Case *actu);
+int nombre_dames(Position pos);
+
+int gerer_controles(int touche, Position pos, Case *actu);
 
 int afficher_position(Position pos);
 

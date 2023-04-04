@@ -9,7 +9,6 @@
  */
 
 #include "../include/Graphique.h"
-#include <curses.h>
 
 void initialiser_ncurses() {
     initscr();
@@ -19,18 +18,11 @@ void initialiser_ncurses() {
     mousemask(ALL_MOUSE_EVENTS | REPORT_MOUSE_POSITION, NULL);
     curs_set(FALSE);
     start_color();
-    init_pair(CYAN, COLOR_CYAN, COLOR_CYAN);
     init_pair(BLANC, COLOR_WHITE, COLOR_WHITE);
     init_pair(DAME_BLANCHE, COLOR_BLACK, COLOR_WHITE);
     init_pair(DAME_NOIRE, COLOR_WHITE, COLOR_BLACK);
     init_pair(VIOLET, COLOR_MAGENTA, COLOR_MAGENTA);
-    init_pair(LETTRE_VIOLET, COLOR_BLACK, COLOR_MAGENTA);
-    init_pair(CYAN_LETTRE_ROUGE, COLOR_RED, COLOR_CYAN);
-    init_pair(VIOLET_LETTRE_ROUGE, COLOR_RED, COLOR_MAGENTA);
-    init_pair(CYAN_LETTRE_VIOLET, COLOR_MAGENTA, COLOR_CYAN);
-    init_pair(TEXTE_FIN, COLOR_RED, COLOR_BLACK);
-    init_pair(NOIR, COLOR_BLACK, COLOR_BLACK);
-    init_color(9, 0, 0, 0);
+    init_pair(DAME_VIOLET, COLOR_BLACK, COLOR_MAGENTA);
 }
 
 int recuperer_touche(int touche) {
@@ -70,6 +62,10 @@ void afficher_carre(char lettre, int x, int y, int couleur_fond,
     attroff(COLOR_PAIR(couleur_fond));
 }
 
+void afficher_texte(const char* texte) {
+    mvprintw(2, (COLS - strlen(texte))/2, texte);
+}
+
 int affiche_pos(Position pos, Case actu) {
     int nb_cases_x, nb_cases_y, debut_x, debut_y, x, y;
     
@@ -85,7 +81,10 @@ int affiche_pos(Position pos, Case actu) {
         for (int i = 0; i < 8; i++) {
             
             if ((pos >> (i + 8 * j)) & 1) {
-                if((i + j) % 2 == 0) {
+                if ((i + 8 * j) == actu) {
+                    afficher_carre('d', x, y, VIOLET, DAME_VIOLET);
+                }
+                else if((i + j) % 2 == 0) {
                     afficher_carre('d', x, y, BLANC, DAME_BLANCHE);
                 } else {
                     afficher_carre('d', x, y, NOIR, DAME_NOIRE);
@@ -93,15 +92,15 @@ int affiche_pos(Position pos, Case actu) {
             }
                 
             else {
-                if((i + j) % 2 == 0) {
+                if ((i + 8 * j) == actu) {
+                    afficher_carre(' ', x, y, VIOLET, VIOLET);
+                } else if ((i + j) % 2 == 0) {
                     afficher_carre(' ', x, y, BLANC, BLANC);
                 } else {
                     afficher_carre(' ', x, y, NOIR, NOIR);
                 }
             }
-            if ((i + 8 * j) == actu) {
-                afficher_carre(' ', x, y, VIOLET, VIOLET);
-            }
+            
             x += NB_COLONNES_CASE;    
         }
         x = debut_x;
@@ -113,7 +112,6 @@ int affiche_pos(Position pos, Case actu) {
 
 void sortir() {
     nodelay(stdscr, FALSE);
-    getch();
     curs_set(TRUE);
     endwin();
 }

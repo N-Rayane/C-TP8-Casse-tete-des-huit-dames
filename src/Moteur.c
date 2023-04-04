@@ -18,8 +18,19 @@ int est_case_occupee(Position pos, Case c) {
 }
 
 int placer_dame_position(Position *pos, Case c) {
-    (*pos) |= ((unsigned long long)1 << c);
-    return 0;
+    return (*pos) ^= ((unsigned long long) 1 << c);
+}
+
+/* Cette fonction aurait pu être remplacée par une variable "nb_dames" mais,
+ * étant donné l'objectif du TP, il est plus pertinent de faire un comptage bit à bit
+ */
+int nombre_dames(Position pos) {
+    int res = 0;
+
+    for (int i = 0; i < 64; i++) {
+        res += (pos >> i) & 1;
+    }
+    return res;
 }
 
 int afficher_position(Position pos) {
@@ -55,27 +66,30 @@ int calculer_cases_attaquees(Position *pos, Case c) {
     return 1;
 }
 
-void gerer_controles(int touche, Position pos, Case *actu) {
+int gerer_controles(int touche, Position pos, Case *actu) {
+        if (touche != VALIDER && nombre_dames(pos) >= 8) return 0;
     switch (touche) {
         case HAUT:
-            if (*actu >= A8) return;
+            if (*actu >= A8) return 0;
             *actu += 8;
             break;
         case BAS:
-            if (*actu <= H1) return;
+            if (*actu <= H1) return 0;
             *actu -= 8;
             break;
         case GAUCHE:
-            if (*actu <= A1) return;
+            if (*actu <= A1) return 0;
             *actu -= 1;
             break;
         case DROITE:
-            if (*actu >= H8) return;
+            if (*actu >= H8) return 0;
             *actu += 1;
             break;
         case VALIDER:
+            return 1;
             break;
     }
+    return 0;
 }
 
 int remplir_tab_cases_attaquees() {
