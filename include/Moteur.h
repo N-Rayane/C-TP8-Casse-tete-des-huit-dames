@@ -14,6 +14,8 @@
 
 typedef unsigned long long Position;
 
+enum touche { HAUT, BAS, GAUCHE, DROITE, VALIDER, SUPPRIMER };
+
 typedef enum _case_ {
     A1,
     B1,
@@ -84,6 +86,8 @@ typedef enum _case_ {
 int est_case_occupee(Position pos, Case c);
 
 int placer_dame_position(Position *pos, Case c);
+
+void gerer_controles(int touche, Position pos, Case *actu);
 
 int afficher_position(Position pos);
 

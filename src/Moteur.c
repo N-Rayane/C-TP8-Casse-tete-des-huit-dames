@@ -55,6 +55,29 @@ int calculer_cases_attaquees(Position *pos, Case c) {
     return 1;
 }
 
+void gerer_controles(int touche, Position pos, Case *actu) {
+    switch (touche) {
+        case HAUT:
+            if (*actu >= A8) return;
+            *actu += 8;
+            break;
+        case BAS:
+            if (*actu <= H1) return;
+            *actu -= 8;
+            break;
+        case GAUCHE:
+            if (*actu <= A1) return;
+            *actu -= 1;
+            break;
+        case DROITE:
+            if (*actu >= H8) return;
+            *actu += 1;
+            break;
+        case VALIDER:
+            break;
+    }
+}
+
 int remplir_tab_cases_attaquees() {
     Position pos;
     for (int i = A1; i < H8; i++) {

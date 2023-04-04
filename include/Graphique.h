@@ -45,6 +45,8 @@ enum couleurs {
  */
 void initialiser_ncurses();
 
+int recuperer_touche(int touche);
+
 /**
  * @brief affiche une case
  * contenant la lettre passée en
@@ -66,7 +68,7 @@ void afficher_carre(char lettre, int x, int y, int couleur_fond,
  * @retval 0 si l'affage n'a pas
  * pu être fait
  */
-int affiche_pos(Position pos);
+int affiche_pos(Position pos, Case actu);
 
 /**
  * @brief ferme la fenêtre

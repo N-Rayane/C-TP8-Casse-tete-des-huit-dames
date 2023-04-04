@@ -33,6 +33,25 @@ void initialiser_ncurses() {
     init_color(9, 0, 0, 0);
 }
 
+int recuperer_touche(int touche) {
+    switch (touche) {
+    case KEY_UP:
+        return HAUT;
+    case KEY_DOWN:
+        return BAS;
+    case KEY_LEFT:
+        return GAUCHE;
+    case KEY_RIGHT:
+        return DROITE;
+    case KEY_BACKSPACE:
+        return SUPPRIMER;
+    case '\n':
+        return VALIDER;
+    default:
+        return -1;
+    }
+}
+
 void afficher_carre(char lettre, int x, int y, int couleur_fond,
                     int couleur_texte) {
     attron(COLOR_PAIR(couleur_fond));
@@ -51,7 +70,7 @@ void afficher_carre(char lettre, int x, int y, int couleur_fond,
     attroff(COLOR_PAIR(couleur_fond));
 }
 
-int affiche_pos(Position pos) {
+int affiche_pos(Position pos, Case actu) {
     int nb_cases_x, nb_cases_y, debut_x, debut_y, x, y;
     
     debut_x = (COLS/2) - ((NB_COLONNES*NB_COLONNES_CASE)/2);
@@ -62,8 +81,9 @@ int affiche_pos(Position pos) {
     y = debut_y;
 
     for (int j = 7; j >= 0; j--) {
-        move(j, 0);
+        //move(j, 0);
         for (int i = 0; i < 8; i++) {
+            
             if ((pos >> (i + 8 * j)) & 1) {
                 if((i + j) % 2 == 0) {
                     afficher_carre('d', x, y, BLANC, DAME_BLANCHE);
@@ -78,6 +98,9 @@ int affiche_pos(Position pos) {
                 } else {
                     afficher_carre(' ', x, y, NOIR, NOIR);
                 }
+            }
+            if ((i + 8 * j) == actu) {
+                afficher_carre(' ', x, y, VIOLET, VIOLET);
             }
             x += NB_COLONNES_CASE;    
         }
